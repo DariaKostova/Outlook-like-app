@@ -182,102 +182,39 @@ function getHTMLPart(arr) {
 function authorize() {
     gapi.auth.authorize({client_id: clientId, scope: contactScopes, immediate: false}, handleAuthorization);
 }
-var contactlist = [];
+
 function handleAuthorization(authorizationResult) {
-    // if (authorizationResult && !authorizationResult.error) {
-    //     $.get("https://www.google.com/m8/feeds/contacts/default/full?alt=json&access_token=" + authorizationResult.access_token + "&alt=json",
-    //         function (response) {
-    //             //console.log(access_token);
-    //             var contactEntries = response.feed.entry;
-    //             //console.log(contactEntries);
-    //             var contactlist = [];
-    //             $.each(contactEntries, function(index,value){
-    //                 var contactName = (JSON.stringify(value.title.$t)).replace(pattern, '');
-    //                 var email = (JSON.stringify(value.gd$email[0].address)).replace(pattern, '');
-    //                 var phone = (JSON.stringify(value.gd$phoneNumber[0].$t)).replace(pattern, '');
-    //                 //var contactImg = (JSON.stringify(value.link[0].href)).replace(pattern, '');
-    //                 var contactImg = (JSON.stringify(value.link[0].href)).replace(/['"]+/g, '') + "&access_token=" + authorizationResult.access_token;
-    //                 console.log(contactImg.url);
-    //                 if (contactImg !== null) {
-    //                     fetch(contactImg)
-    //                         .then((response) => {
-    //                             let photo = response.url;
-    //                             console.log(photo);
-    //                         }
-    //                         )
-    //                     }
-                
-    //                 //var contactImg = photos[index];
-    //                 var jobTitle = (JSON.stringify(value.gd$organization[0].gd$orgTitle.$t)).replace(pattern, '');
-    //                 var companyName = (JSON.stringify(value.gd$organization[0].gd$orgName.$t).replace(pattern, ''));
-    //                 //console.log(contactImg);
-    //                 contactlist.push({ 
-    //                     name: contactName, 
-    //                     email: email, 
-    //                     phone: phone, 
-    //                     image: contactImg, 
-    //                     job: jobTitle, 
-    //                     company: companyName 
-    //                 });
-    //             })
     if (authorizationResult && !authorizationResult.error) {
-    fetch(`https://www.google.com/m8/feeds/contacts/default/full?alt=json&access_token=${authorizationResult.access_token}&max-results=25&v=3.0`)
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((res) => {
-                        let contactsResult = res.feed.entry;
-                        contactsResult = contactsResult.filter(c => c.gd$name);
-                        
-                        contactsResult.forEach(c => {
-
-                            const tryFn = (fn, fallback = null) => {
-                                try {
-                                    return fn();
-                                } catch (error) {
-                                    return fallback;
-                                }
-                            }
-                            
-                            let contactName = tryFn(() => c.gd$name.gd$fullName.$t, 'No name');
-                            let jobTitle = tryFn(() => c.gd$organization[0].gd$orgTitle.$t, 'No job title');
-                            let companyName = tryFn(() => c.gd$organization[0].gd$orgName.$t, 'No department');
-                            let photoLink = tryFn(() => c.link[0].href);
-
-                            if (photoLink) {
-                                fetch(`${photoLink}&access_token=${authorizationResult.access_token}`)
-                                    .then((response) => {
-                                        let photo = response.url;
-                                        console.log(photo);
-                                        contactlist.push({ 
-                                            name: contactName, 
-                                            phone: phone, 
-                                            image: photo, 
-                                            job: jobTitle, 
-                                            company: companyName 
-                                        });
-                                    })
-                                    .catch((err) => {
-                                        console.log(err);
-                                    })
-                            } else {
-                                let newContact = { contactFullName, contactTitle, department, photo: '' }
-                                setContacts(oldContacts => [...oldContacts, newContact]);
-                            }
-                        })
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-
-                            
+        $.get("https://www.google.com/m8/feeds/contacts/default/full?alt=json&access_token=" + authorizationResult.access_token + "&alt=json",
+            function (response) {
+                //console.log(access_token);
+                var contactEntries = response.feed.entry;
+                //console.log(contactEntries);
+                var contactlist = [];
+                $.each(contactEntries, function(index,value){
+                    var contactName = (JSON.stringify(value.title.$t)).replace(pattern, '');
+                    var email = (JSON.stringify(value.gd$email[0].address)).replace(pattern, '');
+                    var phone = (JSON.stringify(value.gd$phoneNumber[0].$t)).replace(pattern, '');
+                    //var contactImg = (JSON.stringify(value.link[0].href)).replace(pattern, '');
+                    var contactImg = photos[index];
+                    var jobTitle = (JSON.stringify(value.gd$organization[0].gd$orgTitle.$t)).replace(pattern, '');
+                    var companyName = (JSON.stringify(value.gd$organization[0].gd$orgName.$t).replace(pattern, ''));
+                    //console.log(contactImg);
+                    contactlist.push({ 
+                        name: contactName, 
+                        email: email, 
+                        phone: phone, 
+                        image: contactImg, 
+                        job: jobTitle, 
+                        company: companyName 
+                    });
+                })
+               
                 //console.log(contactlist);
                 var dataSource = new kendo.data.DataSource({
                      data: contactlist
                 })
 
-
-                
                 //console.log(dataSource);
                 $("#contacts-listview").kendoListView({
                     dataSource: dataSource,
@@ -293,9 +230,9 @@ function handleAuthorization(authorizationResult) {
 
                 });
             }
-        //)
+        )
     }
-//}
+}
    
 
 /**
