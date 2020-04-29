@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Outlook Like App</title>
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Reference to the Kendo UI CSS files -->
+    <link rel="stylesheet" href="assets/vendor/kendoUI/styles/kendo.common.min.css" />
+
+    <!-- <link rel="stylesheet" href="assets/vendor/kendoUI/styles/kendo.default.min.css" /> -->
+
+    <!-- <link rel="stylesheet" href="assets/vendor/kendoUI/styles/kendo.default.mobile.min.css" /> -->
+
+    <link rel="stylesheet" href="assets/vendor/kendoUI/styles/kendo.flat.min.css">
+
+    <link rel="stylesheet" href="assets/vendor/kendoUI/styles/kendo.flat.mobile.min.css">
+    
+    <!-- Reference to Roboto font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,100;1,300;1,400&display=swap" rel="stylesheet">
+
+    <!-- Reference to Font-awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all" />
+
+   
+    <!-- Reference to style.css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Reference to the jQuery library. It is important tha the jQuery file is loaded before the JavaScript file of Kendo UI -->
+    <script src="assets/vendor/jquery-3.4.1.min.js"></script>
+
+    <!-- Reference to the Kendo UI JavaScript file -->
+    <script src="assets/vendor/kendoUI/js/kendo.all.min.js"></script>
+    
+    <!-- Reference to functions.js -->
+    <script src="functions.js"></script>
+
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <main class="main">
+        <div class="app-head">
+            <h1 class="app-title">Welcome to My Outlook Like App</h1>
+
+            <p>Please, authorize yourself</p>
+        </div>
+
+        <div class="successful-authentication hidden">
+            <h1>
+                My Outlook Like App
+            </h1>
+        </div>
+
+        <button id="authorize-button" class="k-primary">Authorize</button>
+
+        <div id="tabstrip">
+            <ul class="list-tabs">
+                <li class="k-state-active" id="emails-tab">
+                    My Emails 
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </li>
+
+                <li id="events-tab">
+                    <span>
+                        My Appointments
+                    </span>
+                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                </li>
+
+                <li id="contacts-tab">
+                    My Contacts
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                </li>                
+            </ul>
+
+            <div class="emails-table">
+                <table id="emails-inbox" class="kendo-table">
+                    <thead>
+                        <tr>
+                            <th data-field="email-sender">From</th>
+                            <th data-field="subject">Subject</th>
+                            <th data-field="date">Date/Time</th>
+                        </tr>
+                    </thead>          
+                    <tbody></tbody>
+                </table>
+
+                <div class="message-popup">
+                    <span class="btn-close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+
+                    <div class="message-body"></div>                    
+                </div>
+            </div>
+
+            <div class="events-table">
+                <button id="synchronize-button" class="k-primary">Sync my calendar</button>
+
+                <div id="events-scheduler"></div>
+            </div>
+
+            <div class="contacts-table">
+                <ul id="contacts-listview" class="kendo-table"></ul>
+            </div>            
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
