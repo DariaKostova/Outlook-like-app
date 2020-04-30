@@ -135,13 +135,20 @@ iframe {
 }
 
 .message-popup.k-popup.k-group.k-reset.k-state-border-up {
-    top: calc(50% - 200px);
-    bottom: calc(50% - 200px);
-    left: calc(50% - 300px);
-    right: calc(50% - 300px);
+    top: calc(50% - 300px);
+    bottom: calc(50% - 300px);
+    left: calc(50% - 500px);
+    right: calc(50% - 500px);
     border-radius: 5px;
     border: 1px solid #00000060;
     overflow: auto;
+}
+
+@media (max-width: 1024px) {
+    .message-popup.k-popup.k-group.k-reset.k-state-border-up {
+        left: calc(50% - 500px);
+        right: calc(50% - 500px);
+    }
 }
 
 .message-popup .modal-header h4 {
